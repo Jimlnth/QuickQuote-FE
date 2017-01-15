@@ -23,9 +23,7 @@ class Login extends React.Component {
 		.then(function(data) {
 			if (!data.length) throw new Error('login failed');
 
-			this.setState({
-				isLogged: true
-			});
+			this.setState({	isLogged: true });
 			console.log(data);
 		}.bind(this)).catch(function(error) {
 			console.log(error);
@@ -34,25 +32,20 @@ class Login extends React.Component {
 	}
 
 	logout(e) {
-		this.setState({
-			isLogged: false
-		});
+		this.setState({ isLogged: false	});
 		this.clearFields();
 	}
 
 	clearFields() {
-		this.setState({
-			login: "",
-			password: ""
-		});
+		this.setState({	login: "", password: "" });
 	}
 
 	updateLoginState(e) {
-      this.setState({login: e.target.value});
+      this.setState({ login: e.target.value });
    	}
 
    	updatePasswordState(e) {
-      this.setState({password: e.target.value});
+      this.setState({ password: e.target.value });
    	}
 
    	render() {
