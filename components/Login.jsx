@@ -7,9 +7,9 @@ class Login extends React.Component {
 		super();
 
 		this.state = {
-			login: "",
-			password: "",
-			isLogged: false
+			login: '',
+			password: '',
+			loggedUser: ''
 		};
 
 		this.updateLoginState = this.updateLoginState.bind(this);
@@ -23,21 +23,21 @@ class Login extends React.Component {
 		.then(function(data) {
 			if (!data.length) throw new Error('login failed');
 
-			this.setState({	isLogged: true });
-			console.log(data);
+			this.setState({	loggedUser: data[0]._id });
+			this.clearFields();
 		}.bind(this)).catch(function(error) {
 			console.log(error);
+			this.clearFields();
 		});
-		this.clearFields();
 	}
 
 	logout(e) {
-		this.setState({ isLogged: false	});
+		this.setState({ loggedUser: '' });
 		this.clearFields();
 	}
 
 	clearFields() {
-		this.setState({	login: "", password: "" });
+		this.setState({	login: '', password: '' });
 	}
 
 	updateLoginState(e) {
@@ -50,7 +50,7 @@ class Login extends React.Component {
 
    	render() {
    		let form = null;
-   		if (!this.state.isLogged) {
+   		if (!this.state.loggedUser) {
    			form = 	(<div>
    						<input className="form-control" type="text" placeholder="log-in" 
    							value={this.state.login} onChange={this.updateLoginState} required/>
@@ -64,7 +64,7 @@ class Login extends React.Component {
    					</div>);
    		}
 
-   		let quickQuote = this.state.isLogged ? <QuickQuote/> : null;
+   		let quickQuote = this.state.loggedUser ? <QuickQuote user={this.state.loggedUser}/> : null;
 
       	return (
          	<div className="container login">

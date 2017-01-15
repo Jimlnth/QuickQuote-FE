@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 class QuickQuote extends React.Component {
 	constructor() {
@@ -37,7 +38,29 @@ class QuickQuote extends React.Component {
 			default:
 				price = 'Incorrect make';
 		}
-		this.setState({	price: price, error: '' });
+		this.setState({	price: price, error: '' }, () => {
+			this.saveQuickQuote();
+			this.clearFields();
+		});
+	}
+
+	saveQuickQuote() {
+		$.post('http://localhost:5000/api/quickQuote', 
+			{ 	user: this.props.user,
+				familyName: this.state.familyName,
+				make: this.state.make,
+				value: this.state.value,
+				price: this.state.price
+			})
+		.then(function(data) {
+			console.log(data);
+		}).catch(function(error) {
+			console.log(error);
+		});
+	}
+
+	clearFields() {
+		this.setState({	familyName: '', make: 'Audi', value: '' });
 	}
 
 	updateFamilyNameState(e) {
