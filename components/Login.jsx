@@ -23,6 +23,7 @@ class Login extends React.Component {
 		.then(function(data) {
 			if (!data.length) throw new Error('login failed');
 
+			//loggedUser: this.state.login to get the user login label
 			this.setState({	loggedUser: data[0]._id });
 			this.clearFields();
 		}.bind(this)).catch(function(error) {
